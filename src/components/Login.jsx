@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+// axios 통신 => 기본 URL 설정
+// 환경설정 파일에서 기본 URL 주소(REACT_APP_API_URL)를 읽어서 동적으로 세팅
+// => 최초 진입지에서 URL을 잡아주면 됨.
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 /**
  * 로그인 
  * @returns
@@ -19,7 +24,8 @@ function Login() {
     formData.append('password', pwd);
 
     const response = await axios({
-        url: 'http://localhost:8080/loginCheck',
+        // url: 'http://localhost:8080/loginCheck',
+        url: '/loginCheck',
         method: 'POST',
         data: formData,
         // 중요
