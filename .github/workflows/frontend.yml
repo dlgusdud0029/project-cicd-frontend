@@ -1,0 +1,30 @@
+name: React CI/CD
+
+# 트리거 : PUSH, PR(Pull Request) -> 이벤트 발생시 작동, 브랜치는 main(없으면 master)
+# 만약 : 프런트와 백엔드 통합 => 특정 디렉토리가 업데이트 될 때 반영하는 등 세부 조건 추가 가능
+on:
+  push:
+    branch:
+      - master
+  pull_request:
+    bransh:
+      - master
+# 해야할 일
+jobs:
+  react-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 체크아웃 -> github의 저장소로부터 소스 체크아웃
+      - name: Checkout repository resource
+        use: actions/checkout@v2
+
+      # 2. 환경변수 동적 생성 -> .env 파일 생성(EC2 정보 세팅) => 기존코드 수정(보안)
+      - name: .env 환경 변수 동적 생성
+        run: |
+          echo "${{ secret.CLIENT_ENV }}" > .env
+      # 3. 빌드를 위한 조건 -> nodejs 설치
+      # 4. npm install 라이브러리 설치
+      # 5. 빌드
+      # 6. 빌드의 결과물을 EC2 업로드
+      # 7. 뒷정리 : 업로드 결과 -> nginx의 root로 이동(설정) / 디렉토리 정리
+      #
