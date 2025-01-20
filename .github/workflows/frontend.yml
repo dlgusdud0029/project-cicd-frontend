@@ -7,7 +7,7 @@ on:
     branch:
       - master
   pull_request:
-    bransh:
+    branch:
       - master
 # 해야할 일
 jobs:
